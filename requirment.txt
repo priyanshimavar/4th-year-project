@@ -1,0 +1,15 @@
+# Web Framework & API
+Flask==3.0.3
+Flask-Cors==4.0.1
+
+# Computer Vision & Hand Tracking
+mediapipe==0.10.32
+opencv-python==4.13.0.92
+
+# Machine Learning & Processing
+scikit-learn==1.8.0
+numpy==1.26.4
+pandas==2.2.2
+
+# Utilities
+python-dotenv==1.0.1
