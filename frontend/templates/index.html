@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign Language to Speech</title>
+  <style>
+    :root {
+      --primary: #4a90e2;
+      --secondary: #f5f7fa;
+      --dark-bg: #1e1e2f;
+      --light-bg: #ffffff;
+      --text-light: #f5f5f5;
+      --text-dark: #333;
+    }
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: var(--secondary);
+      color: var(--text-dark);
+      transition: background 0.3s, color 0.3s;
+    }
+    body.dark {
+      background: var(--dark-bg);
+      color: var(--text-light);
+    }
+    header, footer {
+      background: var(--primary);
+      color: #fff;
+      text-align: center;
+      padding: 15px;
+      font-size: 1.2em;
+      letter-spacing: 1px;
+    }
+    main {
+      display: flex;
+      justify-content: space-around;
+      align-items: flex-start;
+      padding: 20px;
+      gap: 20px;
+    }
+    .card {
+      flex: 1;
+      background: var(--light-bg);
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+      transition: background 0.3s, color 0.3s;
+    }
+    body.dark .card {
+      background: #2a2a3d;
+      color: var(--text-light);
+    }
+    video {
+      width: 100%;
+      border-radius: 12px;
+      border: 3px solid var(--primary);
+    }
+    #outputText {
+      font-size: 22px;
+      font-weight: bold;
+      min-height: 120px;
+      padding: 15px;
+      border-radius: 8px;
+      background: #eef2f7;
+      transition: background 0.3s;
+    }
+    body.dark #outputText {
+      background: #3a3a4d;
+    }
+    button {
+      margin-top: 15px;
+      padding: 12px 20px;
+      font-size: 16px;
+      border: none;
+      border-radius: 8px;
+      background: var(--primary);
+      color: #fff;
+      cursor: pointer;
+      transition: transform 0.2s, background 0.3s;
+    }
+    button:hover {
+      transform: scale(1.05);
+      background: #357ab8;
+    }
+    .toggle {
+      position: absolute;
+      top: 15px;
+      right: 20px;
+      background: #fff;
+      border-radius: 50%;
+      padding: 8px;
+      cursor: pointer;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Sign Language to Speech</h1>
+    <div class="toggle" onclick="toggleTheme()">🌙</div>
+  </header>
+  
+  <main>
+    <div class="card">
+      <h2>Webcam Feed</h2>
+      <video id="webcam" autoplay></video>
+    </div>
+    
+    <div class="card">
+      <h2>Detected Text</h2>
+      <div id="outputText">Waiting for sign input...</div>
+      <button onclick="speakText()">🔊 Speak</button>
+    </div>
+  </main>
+  
+  <footer>
+    <p>Accessibility Project • Modern UI</p>
+  </footer>
+
+  <script>
+    // Dark/Light Mode Toggle
+    function toggleTheme() {
+      document.body.classList.toggle('dark');
+    }
+
+    // Webcam Access
+    const webcam = document.getElementById('webcam');
+    navigator.mediaDevices.getUserMedia({ video: true })
+      .then(stream => {
+        webcam.srcObject = stream;
+      })
+      .catch(err => {
+        console.error("Error accessing webcam: ", err);
+      });
+
+    // Placeholder: Simulated sign recognition output
+    let detectedText = "Hello, welcome!";
+    document.getElementById('outputText').innerText = detectedText;
+
+    // Text-to-Speech
+    function speakText() {
+      const text = document.getElementById('outputText').innerText;
+      const speech = new SpeechSynthesisUtterance(text);
+      window.speechSynthesis.speak(speech);
+    }
+  </script>
+</body>
+</html>
